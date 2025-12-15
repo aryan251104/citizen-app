@@ -1,0 +1,137 @@
+.sheetContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 50;
+    /* Above SOS button? Maybe not, SOS is usually top. But this covers map. */
+    max-height: 80vh;
+    padding-bottom: 2rem;
+}
+
+.visible {
+    transform: translateY(0);
+}
+
+.hidden {
+    transform: translateY(100%);
+}
+
+.handleBar {
+    width: 100%;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.handleBar::after {
+    content: "";
+    width: 40px;
+    height: 4px;
+    background: hsl(var(--border));
+    border-radius: 2px;
+}
+
+.content {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.typeIcon {
+    font-size: 2rem;
+    background: hsl(var(--secondary));
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.titleBlock {
+    flex: 1;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.meta {
+    font-size: 0.8rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: hsl(var(--muted-foreground));
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.description {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.videoPlaceholder {
+    width: 100%;
+    height: 180px;
+    background: black;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 500;
+}
+
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.actionBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem;
+    border-radius: 12px;
+    border: 1px solid hsl(var(--border));
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.primaryAction {
+    background: hsl(var(--primary));
+    color: white;
+    border-color: hsl(var(--primary));
+}

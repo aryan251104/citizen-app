@@ -1,0 +1,82 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    background: hsl(var(--background));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    color: hsl(var(--foreground));
+    cursor: pointer;
+}
+
+.card {
+    width: 90%;
+    max-width: 400px;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    background: hsl(var(--primary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.icon {
+    color: white;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    color: hsl(var(--foreground));
+}
+
+.subtitle {
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 2rem;
+}
+
+.googleBtn {
+    width: 100%;
+    padding: 1rem;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.googleBtn:active {
+    transform: scale(0.98);
+}
+
+.googleIcon {
+    width: 20px;
+    height: 20px;
+}

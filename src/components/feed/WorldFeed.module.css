@@ -1,0 +1,177 @@
+.feedContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsl(var(--background));
+    z-index: 50;
+    /* Above map but below modals */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    /* Hide scrollbar Firefox */
+}
+
+/* ... keep scrollbar hidden ... */
+.feedContainer::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Chrome/Safari */
+}
+
+.feedItem {
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--background));
+}
+
+.closeButton {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.5);
+    /* Keep semi-transparent for contrast over video, or use theme? */
+    /* If I use theme card, it blocks video. Glass is better. */
+    /* Use theme text color? No, video needs contrast. */
+    /* BUT if we are in Light Mode, maybe we want a Light Glass? */
+    background: hsl(var(--background) / 0.5);
+    color: hsl(var(--foreground));
+    padding: 8px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+}
+
+.videoPlaceholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Overlays */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.contentLayer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 1rem 6rem 1rem;
+    /* Botton padding for nav bar space */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: auto;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ccc;
+    border: 1px solid white;
+}
+
+.username {
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.location {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Sidebar Actions */
+.actionsBar {
+    position: absolute;
+    right: 1rem;
+    bottom: 7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    pointer-events: auto;
+    align-items: center;
+}
+
+.actionBtn {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    color: white;
+    cursor: pointer;
+}
+
+.actionIconContainer {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.actionBtn:active .actionIconContainer {
+    transform: scale(0.9);
+}
+
+.actionLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Badge */
+.incidentBadge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 0.25rem;
+    align-self: flex-start;
+}
