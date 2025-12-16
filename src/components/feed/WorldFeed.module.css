@@ -13,6 +13,8 @@
     /* Hide scrollbar Firefox */
 }
 
+/* Full screen on all devices */
+
 /* ... keep scrollbar hidden ... */
 .feedContainer::-webkit-scrollbar {
     display: none;
@@ -174,4 +176,99 @@
     color: white;
     margin-bottom: 0.25rem;
     align-self: flex-start;
+}
+
+.userDetailsOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.userCard {
+    background: white;
+    width: 90%;
+    max-width: 320px;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.userHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.userAvatarLarge {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ccc;
+    border: 3px solid #3b82f6;
+}
+
+.userHeader h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1f2937;
+}
+
+.followButton {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.userStats {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.userStats div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userStats strong {
+    font-size: 1.1rem;
+    color: #111827;
+}
+
+.userStats span {
+    font-size: 0.8rem;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.closeUserBtn {
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem 2rem;
+    border-radius: 20px;
+    color: #6b7280;
+    cursor: pointer;
+    font-weight: 600;
 }

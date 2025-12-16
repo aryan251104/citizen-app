@@ -26,14 +26,21 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.headerLeft,
+.headerLeft {
+  width: 40px;
+  pointer-events: auto;
+}
+
 .headerRight {
   width: 40px;
   pointer-events: auto;
-  /* Re-enable clicks for buttons */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }
 
 .iconButton {
@@ -55,6 +62,7 @@
   color: white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   font-weight: 600;
+  align-self: center;
 }
 
 .centerAction {
@@ -73,28 +81,23 @@
 }
 
 .navButton {
-  background: none;
-  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   color: white;
-  gap: 0.25rem;
   cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s;
   width: 60px;
-  /* Fixed width for alignment */
+  height: 60px;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
 }
 
-.sosContainer {
-  margin-bottom: 20px;
-  /* Push it up slightly to break the line */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-}
-
-.navButton:hover {
-  opacity: 1;
+.navButton:active {
+  transform: scale(0.95);
 }
 
 .navIcon {
@@ -103,6 +106,24 @@
 }
 
 .navText {
-  font-size: 0.8rem;
-  font-weight: 500;
+  display: none;
+}
+
+/* Desktop / Tablet Responsiveness */
+@media (min-width: 768px) {
+  .controls {
+    width: auto;
+    min-width: 400px;
+    margin: 0 auto 2rem auto;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 1rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .header {
+    padding: 1.5rem 2rem;
+  }
 }

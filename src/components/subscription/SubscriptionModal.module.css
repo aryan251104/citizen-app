@@ -1,0 +1,185 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 210;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal {
+    width: 90%;
+    max-width: 800px;
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.header {
+    text-align: center;
+    padding: 2.5rem 1.5rem 1rem 1.5rem;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(to right, #0ea5e9, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: hsl(var(--muted-foreground));
+    font-size: 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.card {
+    background: hsl(var(--muted));
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: hsl(var(--primary));
+}
+
+.card.highlighted {
+    background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+    z-index: 1;
+}
+
+.card.highlighted .price {
+    color: white;
+}
+
+.card.highlighted .featureItem {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.planName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: hsl(var(--foreground));
+}
+
+.period {
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+.features {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.featureItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: hsl(var(--muted-foreground));
+    text-align: left;
+}
+
+.ctaButton {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    transition: opacity 0.2s;
+}
+
+.ctaButton:hover {
+    opacity: 0.9;
+}
+
+.card.highlighted .ctaButton {
+    background: white;
+    color: #2563eb;
+}

@@ -24,26 +24,53 @@ interface LeafletMapProps {
     onLocationFound?: (lat: number, lng: number) => void;
 }
 
-const LocationMarker = ({ onLocationFound }: { onLocationFound?: (lat: number, lng: number) => void }) => {
+const LocationMarker = ({ onLocationFound: onLocationFoundProp }: { onLocationFound?: (lat: number, lng: number) => void }) => {
     const [position, setPosition] = useState<L.LatLng | null>(null);
     const map = useMap();
     const hasCentered = useRef(false);
 
     useEffect(() => {
-        map.locate().on("locationfound", function (e: L.LocationEvent) {
+        map.locate({ watch: true, enableHighAccuracy: true, timeout: 10000, maximumAge: 10000 });
+
+        const onLocationFound = (e: L.LocationEvent) => {
             setPosition(e.latlng);
             if (!hasCentered.current) {
                 map.flyTo(e.latlng, map.getZoom());
                 hasCentered.current = true;
             }
-            if (onLocationFound) onLocationFound(e.latlng.lat, e.latlng.lng);
-        });
-    }, [map, onLocationFound]);
+            if (onLocationFoundProp) onLocationFoundProp(e.latlng.lat, e.latlng.lng);
+        };
+
+        const onLocationError = (e: L.ErrorEvent) => {
+            console.error("Location access denied or failed:", e.message);
+            // Fallback or user notification could go here
+        };
+
+        map.on("locationfound", onLocationFound);
+        map.on("locationerror", onLocationError);
+
+        return () => {
+            map.stopLocate();
+            map.off("locationfound", onLocationFound);
+            map.off("locationerror", onLocationError);
+        };
+    }, [map, onLocationFoundProp]);
+
+    const userIcon = L.divIcon({
+        className: styles.userMarker,
+        html: `<div class="${styles.pulse}"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10] // Center the 20x20 icon
+    });
 
     return position === null ? null : (
         <>
-            <Circle center={position} radius={200} pathOptions={{ fillColor: '#3b82f6', fillOpacity: 0.1, color: 'transparent' }} />
-            <Marker position={position} icon={L.divIcon({ className: styles.userMarker, html: `<div class="${styles.pulse}"></div>` })} />
+            <Circle
+                center={position}
+                radius={200}
+                pathOptions={{ fillColor: '#3b82f6', fillOpacity: 0.1, color: 'transparent' }}
+            />
+            <Marker position={position} icon={userIcon} zIndexOffset={1000} />
         </>
     );
 };
@@ -53,8 +80,8 @@ export default function LeafletMap({ incidents = [], friends = [], onIncidentCli
         return L.divIcon({
             className: styles.customMarker,
             html: `<span>${type === 'Fire' ? '🔥' : type === 'Accident' ? '🚗' : type === 'Medical' ? '🚑' : '⚠️'}</span>`,
-            iconSize: [40, 40],
-            iconAnchor: [20, 20],
+            iconSize: [50, 50],
+            iconAnchor: [25, 25],
         });
     };
 
@@ -78,14 +105,20 @@ export default function LeafletMap({ incidents = [], friends = [], onIncidentCli
                 <LocationMarker onLocationFound={onLocationFound} />
 
                 {incidents.map((incident) => (
-                    <Marker
-                        key={incident.id}
-                        position={[incident.lat, incident.lng]}
-                        icon={createIncidentIcon(incident.type)}
-                        eventHandlers={{
-                            click: () => onIncidentClick?.(incident),
-                        }}
-                    />
+                    <div key={incident.id}>
+                        <Circle
+                            center={[incident.lat, incident.lng]}
+                            radius={1000} // 1km radius
+                            pathOptions={{ fillColor: '#ef4444', fillOpacity: 0.1, color: '#ef4444', weight: 1 }}
+                        />
+                        <Marker
+                            position={[incident.lat, incident.lng]}
+                            icon={createIncidentIcon(incident.type)}
+                            eventHandlers={{
+                                click: () => onIncidentClick?.(incident),
+                            }}
+                        />
+                    </div>
                 ))}
 
                 {friends.map((friend) => (

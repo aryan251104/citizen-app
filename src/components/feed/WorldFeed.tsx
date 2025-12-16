@@ -11,6 +11,12 @@ interface WorldFeedProps {
 }
 
 export default function WorldFeed({ isOpen, onClose }: WorldFeedProps) {
+    const [selectedUser, setSelectedUser] = useState<string | null>(null);
+
+    const handleUserClick = (username: string) => {
+        setSelectedUser(username);
+    };
+
     if (!isOpen) return null;
 
     return (
@@ -23,14 +29,61 @@ export default function WorldFeed({ isOpen, onClose }: WorldFeedProps) {
             </button>
 
             {MOCK_FEED.map((item) => (
-                <FeedItem key={item.id} data={item} />
+                <FeedItem
+                    key={item.id}
+                    data={item}
+                    onUserClick={() => handleUserClick(item.user)}
+                />
             ))}
+
+            {selectedUser && (
+                <div className={styles.userDetailsOverlay} onClick={() => setSelectedUser(null)}>
+                    <div className={styles.userCard} onClick={e => e.stopPropagation()}>
+                        <div className={styles.userHeader}>
+                            <div className={styles.userAvatarLarge} />
+                            <h3>{selectedUser}</h3>
+                            <button className={styles.followButton}>Follow</button>
+                        </div>
+                        <div className={styles.userStats}>
+                            <div>
+                                <strong>124</strong>
+                                <span>Reports</span>
+                            </div>
+                            <div>
+                                <strong>4.8k</strong>
+                                <span>Followers</span>
+                            </div>
+                            <div>
+                                <strong>98%</strong>
+                                <span>Trust</span>
+                            </div>
+                        </div>
+                        <button className={styles.closeUserBtn} onClick={() => setSelectedUser(null)}>Close</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
 
-function FeedItem({ data }: { data: FeedItemData }) {
+function FeedItem({ data, onUserClick }: { data: FeedItemData; onUserClick: () => void }) {
     const [liked, setLiked] = useState(false);
+
+    const handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: data.title,
+                text: `Check out this incident report by ${data.user}`,
+                url: window.location.href,
+            }).catch(console.error);
+        } else {
+            alert("Share Link Copied to Clipboard!");
+        }
+    };
+
+    const handleComment = () => {
+        alert("Comments section coming soon! \n(This would open a comment bottom sheet)");
+    };
 
     return (
         <div className={styles.feedItem}>
@@ -57,7 +110,7 @@ function FeedItem({ data }: { data: FeedItemData }) {
                     {data.incidentType}
                 </div>
 
-                <div className={styles.userInfo}>
+                <div className={styles.userInfo} onClick={onUserClick} style={{ cursor: 'pointer' }}>
                     <div className={styles.avatar} />
                     <span className={styles.username}>{data.user}</span>
                     <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.8rem' }}>• {data.timestamp}</span>
@@ -80,14 +133,14 @@ function FeedItem({ data }: { data: FeedItemData }) {
                     <span className={styles.actionLabel}>{liked ? data.likes + 1 : data.likes}</span>
                 </button>
 
-                <button className={styles.actionBtn}>
+                <button className={styles.actionBtn} onClick={handleComment}>
                     <div className={styles.actionIconContainer}>
                         <MessageCircle size={24} color="white" />
                     </div>
                     <span className={styles.actionLabel}>{data.comments}</span>
                 </button>
 
-                <button className={styles.actionBtn}>
+                <button className={styles.actionBtn} onClick={handleShare}>
                     <div className={styles.actionIconContainer}>
                         <Share2 size={24} color="white" />
                     </div>

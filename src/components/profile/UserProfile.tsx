@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { X, Shield, Star, Award, ChevronRight, Settings, LogOut, Camera, Edit2, Check, LogIn } from "lucide-react";
+import { X, Shield, Star, Award, ChevronRight, Settings, LogOut, Camera, Edit2, Check, LogIn, Crown } from "lucide-react";
 import styles from "./UserProfile.module.css";
 import { cn } from "@/lib/utils";
 import SettingsModal from "@/components/settings/SettingsModal";
+import SubscriptionModal from "@/components/subscription/SubscriptionModal";
 import { useSession, signOut, signIn } from "next-auth/react";
 
 interface UserProfileProps {
@@ -28,6 +29,7 @@ export default function UserProfile({ isOpen, onClose }: UserProfileProps) {
     const [username, setUsername] = useState(MOCK_USER.username);
     const [isEditing, setIsEditing] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     if (!isOpen) return null;
@@ -142,6 +144,16 @@ export default function UserProfile({ isOpen, onClose }: UserProfileProps) {
                         <div className={styles.menuList}>
                             <button
                                 className={styles.menuItem}
+                                onClick={() => setIsSubscriptionOpen(true)}
+                                style={{ background: 'linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(6, 182, 212, 0.1))', border: '1px solid rgba(59, 130, 246, 0.2)' }}
+                            >
+                                <Crown size={20} className="text-blue-500" color="#3b82f6" />
+                                <span className={styles.menuText} style={{ color: '#3b82f6', fontWeight: 700 }}>Premium Plans</span>
+                                <ChevronRight size={16} color="#3b82f6" />
+                            </button>
+
+                            <button
+                                className={styles.menuItem}
                                 onClick={() => setIsSettingsOpen(true)}
                             >
                                 <Settings size={20} />
@@ -166,6 +178,7 @@ export default function UserProfile({ isOpen, onClose }: UserProfileProps) {
             </div>
 
             <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+            <SubscriptionModal isOpen={isSubscriptionOpen} onClose={() => setIsSubscriptionOpen(false)} />
         </>
     );
 }
